@@ -1,4 +1,4 @@
-name: Docker image build and pudh
+name: Simple Docker image build and push
 
 on:
   push:
@@ -27,4 +27,4 @@ jobs:
         with:
           context: .
           file: ./Dockerfile
-          push: False
+          push: True
