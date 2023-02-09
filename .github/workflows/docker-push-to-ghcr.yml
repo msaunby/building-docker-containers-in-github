@@ -2,6 +2,7 @@ name: Docker Image build and push
 
 on:
   push:
+    branches: [ "main" ]
     tags:
      - '*'
   workflow_dispatch:
