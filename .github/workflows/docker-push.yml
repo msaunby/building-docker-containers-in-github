@@ -27,4 +27,5 @@ jobs:
         with:
           context: .
           file: ./Dockerfile
+          tags: ghcr.io/${{ env.REPO }}:${{ github.sha }}, ghcr.io/${{ env.REPO }}:latest
           push: True
