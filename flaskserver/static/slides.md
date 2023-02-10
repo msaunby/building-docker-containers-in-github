@@ -31,24 +31,20 @@ The Dockerfile describes how to build the container and, optionally, the command
 ```yaml
 # Base Image
 FROM python:3.11-slim-bullseye
-
 # Working Directory
 WORKDIR /app
-
 # Install packages from requirements.txt
 COPY requirements.txt /app/
 RUN pip install --no-cache-dir --upgrade pip &&\
     pip install --no-cache-dir --trusted-host pypi.python.org -r requirements.txt
-
 # Copy source code to working directory
 COPY flaskserver /app/flaskserver
-
 # Command to run
 CMD ["python", "flaskserver"]
 ```
 
 
-Typically containers are build on top of base images that provide a complete run time environment for the programming language used by the application. Where something more bespoke is needed then we can build on base images such as ```ubuntu:22.04``` and use the package manager to install libraries and tools. e.g.
+Typically containers build on base images that provide a complete run time environment for the programming language used by the application. Where something more bespoke is needed then we can build on base images such as **ubuntu:22.04** and use a package manager to install libraries and tools. e.g.
 ```yaml
 FROM ubuntu:22.04
 RUN apt update && apt install -y --no-install-recommends r-base
