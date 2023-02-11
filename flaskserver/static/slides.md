@@ -2,6 +2,10 @@
 
 * What are containers?
 
+* Deployment
+
+* Project repository
+
 * The Dockerfile
 
 * docker build
@@ -24,6 +28,22 @@
 
 
 
+## Deployment
+
+![](deployment.svg)
+
+
+
+## Project repository
+
+As we are going to deploy directly from the repository all dependencies must be included.
+
+```
+__main__.py
+requirement.txt
+```
+
+
 ## The Dockerfile
 
 The Dockerfile describes how to build the container and, optionally, the command to run. 
@@ -44,12 +64,6 @@ CMD ["python", "flaskserver"]
 ```
 
 
-Typically containers build on base images that provide a complete run time environment for the programming language used by the application. Where something more bespoke is needed then we can build on base images such as **ubuntu:22.04** and use a package manager to install libraries and tools. e.g.
-```yaml
-FROM ubuntu:22.04
-RUN apt update && apt install -y --no-install-recommends r-base
-```
-
 
 
 ## ```docker build```
@@ -65,13 +79,6 @@ $ docker build . -t flask-demo:latest
  => [internal] load metadata for docker.io/library/python:3.11-slim-bullseye                                     1.2s
 ```
 
-
-
-## ```docker run```
-
-```sh
-$ docker run -p 5000:5000 flask-demo
-```
 
 
 
@@ -100,6 +107,15 @@ jobs:
 
 
 
+## ```docker run```
+
+```sh
+$ docker run -p 5000:5000 flask-demo
+```
+
+
+
+
 ## What next?
 
 ### Google Cloud Shell
@@ -107,3 +123,10 @@ jobs:
 ### Containers as development environments
 
 ### Docker Compose and Kubernetes
+
+
+Typically containers build on base images that provide a complete run time environment for the programming language used by the application. Where something more bespoke is needed then we can build on base images such as **ubuntu:22.04** and use a package manager to install libraries and tools. e.g.
+```yaml
+FROM ubuntu:22.04
+RUN apt update && apt install -y --no-install-recommends r-base
+```

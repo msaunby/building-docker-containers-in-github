@@ -1,5 +1,7 @@
 #
 reveal.js-master/
+# PlantUML output
+out/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
