@@ -36,7 +36,7 @@
 
 ## Project repository
 
-As we are going to deploy directly from the repository all dependencies must be included.
+As we are going to deploy directly from a Git repository on GitHub all dependencies must be included in the repo.  For a Python project this means including a Pip requirements file.
 
 ```
 __main__.py
@@ -46,7 +46,9 @@ requirement.txt
 
 ## The Dockerfile
 
-The Dockerfile describes how to build the container and, optionally, the command to run. 
+The Dockerfile describes how to build the container and, optionally, the command to run. Docker is programming language agnostic, so we need to specify the language tools
+we need, Python and Pip, and the libraries.  This is typically done be choosing an
+appropriate base image.
 
 ```yaml
 # Base Image
