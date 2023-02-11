@@ -1,0 +1,53 @@
+@startuml
+!pragma layout smetana
+
+cloud "GitHub\n" {
+card project [
+    Project 
+    ----
+    Python app 
+    ....
+    Dockerfile
+]
+
+card image [
+    Docker image
+    ----
+    Base image
+    ....
+    Project
+    ....
+    Dependencies
+]
+
+}
+
+cloud "Docker Hub\n" {
+card registry [
+    Container registry 
+    ----
+    tag:latest
+    ....
+    tag:v1.1.0
+    ....
+    tag v1.0.0
+    ....
+]
+}
+
+' thing
+together {
+cloud "Hosting service\n" {
+    card container[
+        application 
+        container
+    ]
+}
+actor "http://myproject.app" as a 
+}
+
+project -> image : "  build  "
+image --> registry : push
+registry -r-> container  : "  pull   "
+container --> a
+@enduml
