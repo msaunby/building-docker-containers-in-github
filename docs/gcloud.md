@@ -1,15 +1,15 @@
+# Docker in Google Cloud Shell
 
 ## Web preview
+
+It's very easy to pull and run a container in Cloud Shell. e.g.
 
 ```sh
 mike_saunby@cloudshell:~ (docker-demo-2023)$ docker pull tiangolo/uwsgi-nginx-flask
 mike_saunby@cloudshell:~ (docker-demo-2023)$ docker run  -p 8080:80 docker.io/tiangolo/uwsgi-nginx-flask:latest
 ```
 
-
-## SSH to Cloud Shell
-
-<https://medium.com/@alex.burdenko/vs-code-happens-to-be-my-favorite-code-editor-and-ive-been-lucky-to-participate-so-many-diverse-952102856a7a>
+The web preview feature enables forwarding of port 8080 to you web browser.
 
 ## Docker command line
 
