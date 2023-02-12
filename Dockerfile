@@ -1,6 +1,9 @@
 # Base Image
 FROM python:3.11-slim-bullseye
 
+# Build args
+ARG VERSION
+
 # Working Directory
 WORKDIR /app
 
@@ -14,4 +17,5 @@ COPY flaskserver ./flaskserver
 
 # Default env vars and command.
 ENV PORT=5000
+ENV VERSION=$VERSION
 CMD ["python", "flaskserver"]
