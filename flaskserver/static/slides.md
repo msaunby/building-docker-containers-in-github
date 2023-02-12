@@ -30,11 +30,11 @@ so I've made the fonts smaller, and when I want titles in capitals I'll write th
 
 * The Dockerfile
 
-* docker build
-
-* docker run
+* Docker build
 
 * GitHub Actions
+
+* Container registry
 
 * Deploy (Google Cloud)
 
@@ -148,7 +148,46 @@ jobs:
 
 
 
-## ```docker run```
+## Container registry
+
+A registry provides secure storage of container images with version control based on the tags given to images when pushed. The default container registry is Docker Hub. As we are building our container on GitHub a free Docker Hub account is sufficient. 
+
+![](screenshot-dockerhub.png)
+
+
+
+
+## Deploy
+
+Deploying a container is very simple, we just tell the hosting service the URL of the image to deploy.
+
+![](screenshot-cloudrun1.png)
+
+
+## Deploy (Google Cloud)
+
+<https://building-docker-containers-in-github-2w4u2b57sa-od.a.run.app>
+
+![](screenshot-cloudrun2.png)
+
+
+
+## Live demo
+
+* GitHub pull-request already submitted
+
+* Approve the pull-request
+
+* GitHub action builds and pushes the new image
+
+* Manually update the deployed version in Google Cloud
+
+Typically the last step is also automated, and there would be automated tests of the code before building the container.
+
+
+
+
+## Docker pull and Docker run
 
 ```sh
 $ docker run -p 5000:5000 flask-demo
