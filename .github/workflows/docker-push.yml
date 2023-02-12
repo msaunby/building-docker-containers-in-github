@@ -40,5 +40,7 @@ jobs:
         with:
           context: .
           file: ./Dockerfile
+          build-args: |
+            VERSION={{ github.ref_name }}
           tags: ghcr.io/${{ env.REPO }}:${{ github.sha }}, ghcr.io/${{ env.REPO }}:${{ github.ref_name }}, ghcr.io/${{ env.REPO }}:latest
           push: True
