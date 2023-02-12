@@ -40,6 +40,6 @@ jobs:
           context: .
           file: ./Dockerfile
           build-args: |
-            VERSION={{ github.ref_name }}
+            VERSION=${{ github.ref_name }}
           tags: ${{ env.REPO }}:${{ github.ref_name }}, ${{ env.REPO }}:latest
           push: True
