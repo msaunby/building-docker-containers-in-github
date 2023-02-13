@@ -1,4 +1,4 @@
-name: Simple Docker image build and push
+name: GitHub container registry build and push
 
 on:
   push:
