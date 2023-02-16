@@ -191,6 +191,20 @@ Typically the last step is also automated, and there would be automated tests of
 
 
 
+## Deployment
+
+### Build on GitHub
+
+![](deployment.svg)
+
+
+### Build on Google, AWS, Docker, etc.
+
+![](deployment2.svg)
+
+
+
+
 ## What next?
 
 ### Google Cloud Shell
