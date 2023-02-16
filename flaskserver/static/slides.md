@@ -180,6 +180,8 @@ Deploying a container is very simple, we just tell the hosting service the URL o
 
 * Approve the pull-request
 
+* Create a new release
+
 * GitHub action builds and pushes the new image
 
 * Manually update the deployed version in Google Cloud
@@ -189,14 +191,45 @@ Typically the last step is also automated, and there would be automated tests of
 
 
 
+## Deployment
+
+### Build on GitHub
+
+![](deployment.svg)
+
+
+### Build on Google, AWS, Docker, etc.
+
+![](deployment2.svg)
+
+
+
+
 ## What next?
 
 ### Google Cloud Shell
 
+Click on ```[>_]``` for command line tools including git and docker.
+
+```sh
+$ git clone <your repo>
+$ cd <repo dir>
+$ docker build -t testimg .
+....
+$ docker run -p 8080:5000 testimg
+```
+
 ### Containers as development environments
+
+"The Visual Studio Code Dev Containers extension lets you use a container as a full-featured development environment."
+
+<https://code.visualstudio.com/docs/devcontainers/containers>
 
 ### Docker Compose and Kubernetes
 
+<https://docs.docker.com/compose/>
+
+<https://microk8s.io/>
 
 
 ## [The End](/)
