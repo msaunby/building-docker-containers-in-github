@@ -20,64 +20,92 @@ so I've made the fonts smaller, and when I want titles in capitals I'll write th
 				font-size: 0.65em;
 			}
 </style>	
-## Building Docker containers in GitHub
+## Introduction to DevOps and GitHub Actions
 
-* What are containers?
+* What is DevOps?
 
-* Deployment
+* CI/CD
 
-* Project repository
+* GitHub Actions (and limitations)
+
+* An example Python project
 
 * The Dockerfile
 
-* Docker build
-
-* GitHub Actions
-
-* Container registry
-
-* Deploy (Google Cloud)
-
-* What next?
+* What next?  (building big systems.  See https://yonatankra.com/2-ways-to-use-your-docker-image-in-github-actions/)
 
 
 
-## What are containers?
+## What is DevOps?
 
-Containers are packaged applications that can be run anywhere Docker is available. Docker containers are "lightweight" and can be started very quickly. Sophisticated web services can be built by orchestrating many containers. 
-
-![](architecture.svg)
-
-<https://docs.docker.com/get-started/overview/>
+Devops...
 
 
 
-## Deployment
+## CI/CD
 
-For this example we will build one container providing a Python **flask** web server. The project source files are hosted in GitHub. We're also going to need a hosting service to run our container and a *container registry*.
+Continuous Integration
 
-![](deployment.svg)
+Continuous Delivery
+
+Continuous Deployment
 
 
+## GitHub Actions
 
-## Project repository
+Actions...
 
-As we are going to deploy directly from a Git repository on GitHub, all dependencies must be included in the repo.  For a Python project this means a Pip requirements file together with our source files. We also need a Dockerfile.
+## An example Python project
+
+### Project overview
+
+### Pre-requisites for CI
+
+To integrate the system all the component parts need to be built and any other resources, e.g. configuration files and databases, must be available.
+
+We also need to know how to integrate the system, e.g. where files are placed the directory structure.
+
+Finally there should be some tests to ensure the integration is correct.
+
+### A real project
+
+If you are designing building something entirely new then you will plan all the above.  If, more likely, you are starting with an existing project, perhaps with no build scripts or tests, then the first thing to do is try to build and run the system.
+
+This project is a Dash web application written in Python.  No requirements.txt file or and details on what Python version was used for development, but as this is a new project, still under development I'm going to assume Python 3.11 (the latest release as I write).  
+
+*In the past I would have used virtualenv by running ```python3.11 -m venv .venv```  
+Note that VSCode will generally detect such an envirnoment automatically, and ask if you wish to use it for the current workspace.*
 
 ```sh
-__main__.py
-static/*
-templates/*
-requirement.txt
-Dockerfile
+$ /usr/local/bin/python3.11 -m pip install pipenv
+```
+
+Now this is done all that is needed to prepare a virtual environment is -
+```sh
+$ cd <PROJECT_DIR>
+$ pipenv shell
+% pipenv install dash
+```
+This project depends on several other Python packages.  In most cases you can just try and run the program and resolve any missing packages like this -
+
+```sh
+ModuleNotFoundError: No module named 'pandas'
+% pipenv install pandas    
+```
+
+If this doesn't work, you'll need to either know, or do some Googling.  e.g.
+
+```sh
+ModuleNotFoundError: No module named 'sklearn'
+% pipenv install scikit-learn
 ```
 
 
 ## The Dockerfile
 
-The Dockerfile describes how to build the container and, optionally, the command to run. Docker is programming language agnostic, so we need to specify the language tools
-we need, Python and Pip, and the libraries.  This is typically done be choosing an
-appropriate base image.
+<https://til.simonwillison.net/docker/pipenv-and-docker>
+
+The Dockerfile describes how to build the container and, optionally, the command to run. 
 
 ```yaml [1-14|1-9|11-14]
 FROM python:3.11-slim-bullseye
@@ -95,8 +123,6 @@ ENV PORT=5000
 ENV VERSION=$VERSION
 CMD ["python", "flaskserver"]
 ```
-
-
 
 
 ## Docker build
