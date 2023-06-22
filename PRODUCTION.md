@@ -45,6 +45,12 @@ Probably required for HTTP/2
 
 ## Docker test
 
+```
+% docker build -t building-docker-containers .
+% docker run -p 8080:80 building-docker-containers:latest
+```
+
+
 When running Docker locally it's likely you will create a lot of test containers.  To remove all stopped containers.
 ```
 % docker container prune

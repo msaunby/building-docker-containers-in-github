@@ -1,5 +1,11 @@
-# See https://hub.docker.com/r/tiangolo/uwsgi-nginx-flask/
-FROM tiangolo/uwsgi-nginx-flask:python3.11
+FROM tiangolo/meinheld-gunicorn-flask:python3.9
+
+# See https://hub.docker.com/r/tiangolo/meinheld-gunicorn-flask/
+# Note Python3.9 is used for compatibility. This image is actively
+# maintained.
+
+# Alternatively
+# FROM tiangolo/uwsgi-nginx-flask:python3.11
 
 # Build args
 ARG VERSION
@@ -18,8 +24,6 @@ COPY ./app /app
 # Default env vars
 ENV PORT=80
 ENV VERSION=$VERSION
-
-#CMD pipenv run gunicorn --bind 0.0.0.0:8000 --timeout 120 --workers 2 cbwg.wsgi
 
 # Use this CMD to only run the python app
 #CMD pipenv run python /app/main.py
