@@ -62,7 +62,7 @@ For this example we will build one container providing a Python **flask** web se
 
 ## Project repository
 
-As we are going to deploy directly from a Git repository on GitHub all dependencies must be included in the repo.  For a Python project this means a Pip requirements file together with our source files. We also need a Dockerfile.
+As we are going to deploy directly from a Git repository on GitHub, all dependencies must be included in the repo.  For a Python project this means a Pip requirements file together with our source files. We also need a Dockerfile.
 
 ```sh
 __main__.py
