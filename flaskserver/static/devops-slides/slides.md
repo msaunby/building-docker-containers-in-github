@@ -26,40 +26,43 @@ so I've made the fonts smaller, and when I want titles in capitals I'll write th
 
 * CI/CD
 
-* GitHub Actions (and limitations)
+* GitHub Actions
 
-* An example Python project
+* Pre-requisites for CI
+
+* Example projects
 
 * The Dockerfile
 
-* What next?  (building big systems.  See https://yonatankra.com/2-ways-to-use-your-docker-image-in-github-actions/)
-
+* DNS
 
 
 ## What is DevOps?
 
-Devops...
+Devops is a contraction of Development and Operations.  Traditionally folks involved in either of these would have very little involvement with the other.  This might seem strange, but consider that software development typically includes design, testing, tuning, debugging, code management, etc. and operations can include performance, support, maintenance, porting, security, cost management, etc. There needed to be some separation.  
 
+DevOps is made possible not just by technology, code management systems have been around a very long time, but by software becoming so big that it needs to be broken down into smaller parts.  Some businesses chose to break their software down into services, each of which can be enabled and supported by a small team.
 
 
 ## CI/CD
 
-Continuous Integration
+* Continuous Integration
 
-Continuous Delivery
+* Continuous Delivery
 
-Continuous Deployment
+* Continuous Deployment
 
 
 ## GitHub Actions
 
-Actions...
+Actions are workflows that are triggered by events.  For example when changes are commited to a code repository the test suites are run and any errors reported.
 
-## An example Python project
+As well as running tests, automated workflows are often used to build software packages, create distributable releases and deploy websites and services. 
 
-### Project overview
+See <https://docs.github.com/en/actions/using-workflows/about-workflows>
 
-### Pre-requisites for CI
+
+## Pre-requisites for CI
 
 To integrate the system all the component parts need to be built and any other resources, e.g. configuration files and databases, must be available.
 
@@ -67,47 +70,31 @@ We also need to know how to integrate the system, e.g. where files are placed th
 
 Finally there should be some tests to ensure the integration is correct.
 
-### A real project
 
-If you are designing building something entirely new then you will plan all the above.  If, more likely, you are starting with an existing project, perhaps with no build scripts or tests, then the first thing to do is try to build and run the system.
+## Example projects
 
-This project is a Dash web application written in Python.  No requirements.txt file or and details on what Python version was used for development, but as this is a new project, still under development I'm going to assume Python 3.11 (the latest release as I write).  
+If you are designing building something entirely new then you hopefully plan to automate testing and deployment.  If, more likely, you are starting with an existing project, perhaps with no build scripts or tests, then the first thing to do is try to build and run the system.
 
-*In the past I would have used virtualenv by running ```python3.11 -m venv .venv```  
-Note that VSCode will generally detect such an envirnoment automatically, and ask if you wish to use it for the current workspace.*
+**<https://github.com/UniExeterRSE/team-day-jul-2023-s3-website>**
 
-```sh
-$ /usr/local/bin/python3.11 -m pip install pipenv
-```
+(S3 + Cloudflare) https://demo1.wetoffice.com/ 
 
-Now this is done all that is needed to prepare a virtual environment is -
-```sh
-$ cd <PROJECT_DIR>
-$ pipenv shell
-% pipenv install dash
-```
-This project depends on several other Python packages.  In most cases you can just try and run the program and resolve any missing packages like this -
+**<https://github.com/UniExeterRSE/team-day-jul-2023-lightsail-docker>**
 
-```sh
-ModuleNotFoundError: No module named 'pandas'
-% pipenv install pandas    
-```
+(Google) https://dash-example-4zmip6wjzq-od.a.run.app/ 
 
-If this doesn't work, you'll need to either know, or do some Googling.  e.g.
+(Lightsail) https://container-service-1.hp100t40rijde.eu-west-2.cs.amazonlightsail.com/ 
 
-```sh
-ModuleNotFoundError: No module named 'sklearn'
-% pipenv install scikit-learn
-```
+ 
 
 
 ## The Dockerfile
 
-<https://til.simonwillison.net/docker/pipenv-and-docker>
-
 The Dockerfile describes how to build the container and, optionally, the command to run. 
 
-```yaml [1-14|1-9|11-14]
+Here's an example for a Python Flask application.
+
+```yaml
 FROM python:3.11-slim-bullseye
 ARG VERSION
 WORKDIR /app
@@ -124,138 +111,32 @@ ENV VERSION=$VERSION
 CMD ["python", "flaskserver"]
 ```
 
+If you would rather use pipenv there are useful tips here
+<https://til.simonwillison.net/docker/pipenv-and-docker>
 
-## Docker build
 
-The Dockerfile is a configuration file for the **docker build** tool. Each instruction in the Dockerfile adds additional layers to the base image. Docker build produces a lot of output, like this -
+## DNS
 
-```sh
-Run docker build . --file Dockerfile --tag my-image-name:$(date +%s)
-Sending build context to Docker daemon  7.893MB
+DNS records 
 
-Step 1/7 : FROM python:3.11-slim-bullseye
-3.11-slim-bullseye: Pulling from library/python
-bb263680fed1: Pulling fs layer
-43900b2bbd7f: Pulling fs layer
-...
----> 79e97cd43c08
-Step 3/7 : COPY requirements.txt .
- ---> 7c1c862a25e9
-Step 4/7 : RUN pip install --no-cache-dir --upgrade pip &&    pip install --no-cache-dir --trusted-host pypi.python.org -r requirements.txt
- ---> Running in e4113ad35f0f
-Requirement already satisfied: pip in /usr/local/lib/python3.11/site-packages (22.3.1)
-Collecting pip
-  Downloading pip-23.0-py3-none-any.whl (2.1 MB)
-...
+The following domain names were configured in Cloudflare in advance of the workshop. 
+
+```txt
+demo1.wetoffice.com demo2.wetoffice.com 
+a1.wetoffice.com	a2.wetoffice.com	a3.wetoffice.com 
+b1.wetoffice.com	b2.wetoffice.com	b3.wetoffice.com 
+c1.wetoffice.com	c2.wetoffice.com	c3.wetoffice.com 
+d1.wetoffice.com	d2.wetoffice.com	d3.wetoffice.com 
+e1.wetoffice.com	e2.wetoffice.com	e3.wetoffice.com 
 ```
 
+Each of these should point to an S3 bucket with the same name.  Once you create a bucket with static website content, you should have a working website. 
 
-
-
-## GitHub Actions
-
-The output in the last slide was copied from a report generated automatically by GitHub. These are produced when a GitHub Action runs.
-
-GitHub Actions are automated workflows that use containers to build, test and deploy software. Here's an action to build a Docker container.
-
-```yaml
-name: Docker Image CI
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+```txt
+The DNS records look like this
+TYPE		NAME	TARGET 
+CNAME		a1	a1.wetoffice.com.s3-website.eu-west-2.amazonaws.com	 
 ```
-
-
-
-## Container registry
-
-A registry provides secure storage of container images with version control based on the tags given to images when pushed. The default container registry is Docker Hub. As we are building our container on GitHub a free Docker Hub account is sufficient. 
-
-![](screenshot-dockerhub.png)
-
-
-
-
-## Deploy
-
-Deploying a container is very simple, we just tell the hosting service the URL of the image to deploy.
-
-![](screenshot-cloudrun1.png)
-
-
-## Deploy (Google Cloud)
-
-<https://building-docker-containers-in-github-2w4u2b57sa-od.a.run.app>
-
-![](screenshot-cloudrun2.png)
-
-
-
-## Live demo
-
-* GitHub pull-request already submitted
-
-* Approve the pull-request
-
-* Create a new release
-
-* GitHub action builds and pushes the new image
-
-* Manually update the deployed version in Google Cloud
-
-Typically the last step is also automated, and there would be automated tests of the code before building the container.
-
-
-
-
-## Deployment
-
-### Build on GitHub
-
-![](deployment.svg)
-
-
-### Build on Google, AWS, Docker, etc.
-
-![](deployment2.svg)
-
-
-
-
-## What next?
-
-### Google Cloud Shell
-
-Click on ```[>_]``` for command line tools including git and docker.
-
-```sh
-$ git clone <your repo>
-$ cd <repo dir>
-$ docker build -t testimg .
-....
-$ docker run -p 8080:5000 testimg
-```
-
-### Containers as development environments
-
-"The Visual Studio Code Dev Containers extension lets you use a container as a full-featured development environment."
-
-<https://code.visualstudio.com/docs/devcontainers/containers>
-
-### Docker Compose and Kubernetes
-
-<https://docs.docker.com/compose/>
-
-<https://microk8s.io/>
 
 
 ## [The End](/)
